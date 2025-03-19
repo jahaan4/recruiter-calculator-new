@@ -1,214 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recruiter Calculator Pro - Vansh Bharwani</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recruiter Calculator Pro by Vansh Bharwani</title>
   <style>
-    /* General Styles */
-    body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      margin: 0;
-      background: #f5f7fa;
-      color: #333;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; }
+    .section { padding: 60px 20px; text-align: center; }
+    .landing { background: linear-gradient(to right, #0f2027, #203a43, #2c5364); color: white; }
+    .landing h1 { font-size: 2.5rem; margin-bottom: 20px; }
+    .landing button { padding: 15px 30px; font-size: 1rem; background: #ff7e5f; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; }
+    .landing button:hover { background: #eb4d3d; }
 
-    .container {
-      max-width: 450px;
-      margin: 60px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 1s ease-in-out;
-    }
+    .container { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 40px; }
+    input { width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px; }
+    button.submit-btn { background-color: #007bff; color: white; padding: 10px; border: none; width: 100%; border-radius: 5px; cursor: pointer; }
+    button.submit-btn:hover { background-color: #0056b3; }
+    .hidden { display: none; }
+    .warning { color: red; margin-top: 10px; text-align: center; }
+    .history { background: #e9ecef; padding: 10px; margin-top: 10px; text-align: left; }
 
-    h1,
-    h2 {
-      text-align: center;
-      color: #0b3d91;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      color: #0b3d91;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-
-    input:focus {
-      border-color: #0066cc;
-      outline: none;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background-color: #0066cc;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #0b3d91;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .warning {
-      color: red;
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .result {
-      margin-top: 15px;
-      padding: 10px;
-      background: #e8edf3;
-      border-radius: 5px;
-      color: #0b3d91;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-      font-size: 0.85em;
-      color: #999;
-    }
-
-    /* Animated Background for Landing Page */
-    .landing {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(-45deg, #0066cc, #0b3d91, #004080, #003366);
-      background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
-      color: white;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .landing h1 {
-      font-size: 2.2em;
-      margin-bottom: 20px;
-    }
-
-    .landing button {
-      width: 200px;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid #fff;
-    }
-
-    .landing button:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    /* Smooth scrolling */
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-
 <body>
+
   <!-- Landing Page -->
-  <div class="landing" id="landingPage">
-    <h1>Welcome to<br>Recruiter Calculator Pro</h1>
-    <p>by Vansh Bharwani</p>
-    <button onclick="showLogin()">Get Started</button>
+  <div class="section landing">
+    <h1>Welcome to Recruiter Calculator Pro <br> by Vansh Bharwani</h1>
+    <button onclick="document.getElementById('loginSection').scrollIntoView({behavior: 'smooth'});">Get Started</button>
   </div>
 
-  <!-- Login Page -->
-  <div class="container hidden" id="loginPage">
-    <h2>Login</h2>
-    <label for="username">Username:</label>
-    <input type="text" id="username" placeholder="Enter Username" />
-    <label for="password">Password:</label>
-    <input type="password" id="password" placeholder="Enter Password" />
-    <button onclick="login()">Login</button>
-    <div class="warning" id="loginWarning"></div>
+  <!-- Login Section -->
+  <div class="section" id="loginSection">
+    <div class="container" id="loginContainer">
+      <h2>Login</h2>
+      <input type="text" id="loginUsername" placeholder="Username"/>
+      <input type="password" id="loginPassword" placeholder="Password"/>
+      <button class="submit-btn" onclick="login()">Login</button>
+      <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+      <div class="warning" id="loginWarning"></div>
+    </div>
+
+    <!-- Register Section -->
+    <div class="container hidden" id="registerContainer">
+      <h2>Register</h2>
+      <input type="text" id="registerUsername" placeholder="Choose Username"/>
+      <input type="password" id="registerPassword" placeholder="Choose Password"/>
+      <button class="submit-btn" onclick="register()">Register</button>
+      <p>Already have an account? <a href="#" onclick="showLogin()">Back to Login</a></p>
+      <div class="warning" id="registerWarning"></div>
+    </div>
   </div>
 
   <!-- Calculator Page -->
-  <div class="container hidden" id="calculatorPage">
-    <h2>Bill Rate / Pay Rate Calculator</h2>
-
-    <label for="payRate">Pay Rate ($):</label>
-    <input type="number" id="payRate" step="0.01" placeholder="Enter Pay Rate" />
-
-    <label for="maxPayRate">Client Max Bill Rate ($):</label>
-    <input type="number" id="maxPayRate" step="0.01" placeholder="Enter Client Max Bill Rate" />
-
-    <label for="marginPercent">Expected Margin (%) :</label>
-    <input type="number" id="marginPercent" step="0.01" placeholder="Enter Expected Margin %" />
-
-    <label for="overhead">Overhead (%) :</label>
-    <input type="number" id="overhead" step="0.01" placeholder="Enter Overhead %" value="25" />
-
-    <label for="vmsFee">VMS Fee (%) :</label>
-    <input type="number" id="vmsFee" step="0.01" placeholder="Enter VMS Fee %" value="0" />
-
-    <button onclick="calculate()">Calculate</button>
-
-    <div class="result" id="loadedPayRate"></div>
-    <div class="result" id="billRate"></div>
-    <div class="result" id="marginDollars"></div>
-    <div class="warning" id="warning"></div>
+  <div class="section hidden" id="calculatorPage">
+    <div class="container">
+      <h2>Calculator</h2>
+      <input type="number" id="payRate" placeholder="Pay Rate ($)" />
+      <input type="number" id="maxPayRate" placeholder="Client Max Bill Rate ($)" />
+      <input type="number" id="marginPercent" placeholder="Expected Margin (%)" />
+      <input type="number" id="overhead" placeholder="Overhead (%)" value="25" />
+      <input type="number" id="vmsFee" placeholder="VMS Fee (%)" value="0" />
+      <button class="submit-btn" onclick="calculate()">Calculate</button>
+      <button class="submit-btn" style="background: #28a745; margin-top: 10px;" onclick="showHistory()">View History</button>
+      <div id="result"></div>
+      <div id="history" class="history hidden"></div>
+    </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    © 2025 Vansh Bharwani - All rights reserved
-  </footer>
-
   <script>
-    const users = {
+    // Temporary database
+    let users = {
       "admin": "admin",
       "jahaan": "jahaan"
     };
+    let currentUser = null;
+
+    function showRegister() {
+      document.getElementById('loginContainer').classList.add('hidden');
+      document.getElementById('registerContainer').classList.remove('hidden');
+    }
 
     function showLogin() {
-      document.getElementById('landingPage').classList.add('hidden');
-      document.getElementById('loginPage').classList.remove('hidden');
+      document.getElementById('registerContainer').classList.add('hidden');
+      document.getElementById('loginContainer').classList.remove('hidden');
+    }
+
+    function register() {
+      const username = document.getElementById('registerUsername').value;
+      const password = document.getElementById('registerPassword').value;
+      const warning = document.getElementById('registerWarning');
+      if (username && password) {
+        if (users[username]) {
+          warning.innerText = "User already exists!";
+        } else {
+          users[username] = password;
+          localStorage.setItem(`history_${username}`, JSON.stringify([])); // initialize history
+          warning.innerText = "Registration successful! Go back to login.";
+        }
+      } else {
+        warning.innerText = "Please fill out both fields.";
+      }
     }
 
     function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
       const warning = document.getElementById('loginWarning');
-
       if (users[username] && users[username] === password) {
-        document.getElementById('loginPage').classList.add('hidden');
+        currentUser = username;
+        document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('calculatorPage').classList.remove('hidden');
       } else {
-        warning.innerText = "Invalid credentials. Please try again.";
+        warning.innerText = "Invalid credentials.";
       }
     }
 
@@ -219,27 +125,43 @@
       const overhead = parseFloat(document.getElementById('overhead').value);
       const vmsFee = parseFloat(document.getElementById('vmsFee').value);
 
-      if (isNaN(payRate) || isNaN(marginPercent) || isNaN(overhead) || isNaN(vmsFee) || isNaN(maxPayRate)) {
-        alert("Please enter valid numbers in all fields.");
-        return;
-      }
-
       const loadedPayRate = payRate * (1 + overhead / 100);
-      const adjustedLoadedPayRate = loadedPayRate * (1 + vmsFee / 100);
-      const billRate = adjustedLoadedPayRate / (1 - marginPercent / 100);
-      const marginDollars = billRate - adjustedLoadedPayRate;
+      const billRate = loadedPayRate / (1 - marginPercent / 100);
+      const marginDollars = billRate - loadedPayRate;
 
-      document.getElementById('loadedPayRate').innerText = `Loaded Pay Rate (with Overhead & VMS): $${adjustedLoadedPayRate.toFixed(2)}`;
-      document.getElementById('billRate').innerText = `Bill Rate for Expected Margin: $${billRate.toFixed(2)}`;
-      document.getElementById('marginDollars').innerText = `Expected Margin ($): $${marginDollars.toFixed(2)}`;
+      let warning = billRate > maxPayRate ? "⚠️ Bill Rate exceeds Client's Max Bill Rate!" : '';
 
-      if (billRate > maxPayRate) {
-        document.getElementById('warning').innerText = `⚠️ Bill Rate exceeds Client's Max Bill Rate!`;
+      document.getElementById('result').innerHTML = `
+        <p><strong>Loaded Pay Rate:</strong> $${loadedPayRate.toFixed(2)}</p>
+        <p><strong>Bill Rate for Expected Margin:</strong> $${billRate.toFixed(2)}</p>
+        <p><strong>Expected Margin ($):</strong> $${marginDollars.toFixed(2)}</p>
+        <p style="color:red;">${warning}</p>
+      `;
+
+      // Save history
+      const history = JSON.parse(localStorage.getItem(`history_${currentUser}`) || "[]");
+      history.push({
+        payRate, maxPayRate, marginPercent, overhead, vmsFee, billRate: billRate.toFixed(2), date: new Date().toLocaleString()
+      });
+      localStorage.setItem(`history_${currentUser}`, JSON.stringify(history));
+    }
+
+    function showHistory() {
+      const history = JSON.parse(localStorage.getItem(`history_${currentUser}`) || "[]");
+      const historyDiv = document.getElementById('history');
+      if (history.length === 0) {
+        historyDiv.innerHTML = "<p>No history yet.</p>";
       } else {
-        document.getElementById('warning').innerText = '';
+        historyDiv.innerHTML = history.map(entry => `
+          <div>
+            <strong>Date:</strong> ${entry.date}<br>
+            Pay Rate: $${entry.payRate}, Margin: ${entry.marginPercent}%, Overhead: ${entry.overhead}%, VMS Fee: ${entry.vmsFee}%, Bill Rate: $${entry.billRate}
+            <hr>
+          </div>
+        `).join('');
       }
+      historyDiv.classList.toggle('hidden');
     }
   </script>
 </body>
-
 </html>
