@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recruiter Calculator Pro - Vansh Bharwani</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: 60px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      color: #0b3d91;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #0b3d91;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #0066cc;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0b3d91;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .warning {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #e8edf3;
+      border-radius: 5px;
+      color: #0b3d91;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      font-size: 0.85em;
+      color: #999;
+    }
+
+    /* Animated Background for Landing Page */
+    .landing {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #0066cc, #0b3d91, #004080, #003366);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      color: white;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .landing h1 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+
+    .landing button {
+      width: 200px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid #fff;
+    }
+
+    .landing button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Landing Page -->
+  <div class="landing" id="landingPage">
+    <h1>Welcome to<br>Recruiter Calculator Pro</h1>
+    <p>by Vansh Bharwani</p>
+    <button onclick="showLogin()">Get Started</button>
+  </div>
+
+  <!-- Login Page -->
+  <div class="container hidden" id="loginPage">
+    <h2>Login</h2>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter Username" />
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter Password" />
+    <button onclick="login()">Login</button>
+    <div class="warning" id="loginWarning"></div>
+  </div>
+
+  <!-- Calculator Page -->
+  <div class="container hidden" id="calculatorPage">
+    <h2>Bill Rate / Pay Rate Calculator</h2>
+
+    <label for="payRate">Pay Rate ($):</label>
+    <input type="number" id="payRate" step="0.01" placeholder="Enter Pay Rate" />
+
+    <label for="maxPayRate">Client Max Bill Rate ($):</label>
+    <input type="number" id="maxPayRate" step="0.01" placeholder="Enter Client Max Bill Rate" />
+
+    <label for="marginPercent">Expected Margin (%) :</label>
+    <input type="number" id="marginPercent" step="0.01" placeholder="Enter Expected Margin %" />
+
+    <label for="overhead">Overhead (%) :</label>
+    <input type="number" id="overhead" step="0.01" placeholder="Enter Overhead %" value="25" />
+
+    <label for="vmsFee">VMS Fee (%) :</label>
+    <input type="number" id="vmsFee" step="0.01" placeholder="Enter VMS Fee %" value="0" />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="loadedPayRate"></div>
+    <div class="result" id="billRate"></div>
+    <div class="result" id="marginDollars"></div>
+    <div class="warning" id="warning"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Vansh Bharwani - All rights reserved
+  </footer>
+
+  <script>
+    const users = {
+      "admin": "admin",
+      "jahaan": "jahaan"
+    };
+
+    function showLogin() {
+      document.getElementById('landingPage').classList.add('hidden');
+      document.getElementById('loginPage').classList.remove('hidden');
+    }
+
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const warning = document.getElementById('loginWarning');
+
+      if (users[username] && users[username] === password) {
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('calculatorPage').classList.remove('hidden');
+      } else {
+        warning.innerText = "Invalid credentials. Please try again.";
+      }
+    }
+
+    function calculate() {
+      const payRate = parseFloat(document.getElementById('payRate').value);
+      const maxPayRate = parseFloat(document.getElementById('maxPayRate').value);
+      const marginPercent = parseFloat(document.getElementById('marginPercent').value);
+      const overhead = parseFloat(document.getElementById('overhead').value);
+      const vmsFee = parseFloat(document.getElementById('vmsFee').value);
+
+      if (isNaN(payRate) || isNaN(marginPercent) || isNaN(overhead) || isNaN(vmsFee) || isNaN(maxPayRate)) {
+        alert("Please enter valid numbers in all fields.");
+        return;
+      }
+
+      const loadedPayRate = payRate * (1 + overhead / 100);
+      const adjustedLoadedPayRate = loadedPayRate * (1 + vmsFee / 100);
+      const billRate = adjustedLoadedPayRate / (1 - marginPercent / 100);
+      const marginDollars = billRate - adjustedLoadedPayRate;
+
+      document.getElementById('loadedPayRate').innerText = `Loaded Pay Rate (with Overhead & VMS): $${adjustedLoadedPayRate.toFixed(2)}`;
+      document.getElementById('billRate').innerText = `Bill Rate for Expected Margin: $${billRate.toFixed(2)}`;
+      document.getElementById('marginDollars').innerText = `Expected Margin ($): $${marginDollars.toFixed(2)}`;
+
+      if (billRate > maxPayRate) {
+        document.getElementById('warning').innerText = `⚠️ Bill Rate exceeds Client's Max Bill Rate!`;
+      } else {
+        document.getElementById('warning').innerText = '';
+      }
+    }
+  </script>
+</body>
+
+</html>
